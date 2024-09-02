@@ -6,8 +6,6 @@ export default function IndexPage(){
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}/post`, {
             method: "GET",
-            body: JSON.stringify({posts}),
-            headers: {'Content-Type':'application/json'},
             credentials: 'include',
         }
         ).then(response => {

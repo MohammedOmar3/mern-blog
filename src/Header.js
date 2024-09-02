@@ -7,8 +7,6 @@ export default function Header() {
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/profile`, {
       method: 'GET',
-      body: JSON.stringify({userInfo}),
-      headers: {'Content-Type':'application/json'},
       credentials: 'include',
     }).then(response => {
       response.json().then(userInfo => {
