@@ -4,7 +4,13 @@ import Post from "../Post";
 export default function IndexPage(){
     const [posts,setPosts] = useState([]);
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}/post`).then(response => {
+        fetch(`${process.env.REACT_APP_API_URL}/post`, {
+            method: "GET",
+            body: JSON.stringify({posts}),
+            headers: {'Content-Type':'application/json'},
+            credentials: 'include',
+        }
+        ).then(response => {
             response.json().then(posts => {
                 setPosts(posts);
             });

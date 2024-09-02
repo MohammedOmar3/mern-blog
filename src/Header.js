@@ -3,9 +3,12 @@ import {Link} from 'react-router-dom';
 import { UserContext } from './UserContext';
 
 export default function Header() {
-  const {setUserInfo, userInfo} = useContext(UserContext);
+  const {userInfo, setUserInfo} = useContext(UserContext);
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/profile`, {
+      method: 'GET',
+      body: JSON.stringify({userInfo}),
+      headers: {'Content-Type':'application/json'},
       credentials: 'include',
     }).then(response => {
       response.json().then(userInfo => {
