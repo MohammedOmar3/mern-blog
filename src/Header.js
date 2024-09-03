@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 import { UserContext } from './UserContext';
 
 export default function Header() {
@@ -12,6 +12,7 @@ export default function Header() {
       response.json().then(userInfo => {
         setUserInfo(userInfo);
       });
+      Navigate('/profile');
     });
   }, [userInfo, setUserInfo]);
 
@@ -21,6 +22,7 @@ export default function Header() {
       method: 'POST',
     });
     setUserInfo(null);
+    Navigate('/login');
   }
 
   const username = userInfo?.username;
