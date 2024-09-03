@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import {Link, Navigate} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { UserContext } from './UserContext';
 
 export default function Header() {
@@ -8,11 +8,18 @@ export default function Header() {
     fetch(`${process.env.REACT_APP_API_URL}/profile`, {
       method: 'GET',
       credentials: 'include',
-    }).then(response => {
-      response.json().then(userInfo => {
-        setUserInfo(userInfo);
-      });
-      Navigate('/profile');
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(userInfo => {
+      setUserInfo(userInfo);
+    })
+    .catch(error => {
+      console.error('Error fetching profile:', error);
     });
   }, [userInfo, setUserInfo]);
 
@@ -22,7 +29,6 @@ export default function Header() {
       method: 'POST',
     });
     setUserInfo(null);
-    Navigate('/login');
   }
 
   const username = userInfo?.username;
